@@ -58,19 +58,6 @@ username: foo, password: bar
 $ curl -XPOST -H "Content-Type: application/xml" -d '<xml><username>foo</username><password>bar</password></xml>' http://localhost:1234/login
 username: foo, password: bar
 
-$ DATA=$'--xxx\nContent-Disposition: form-data; name="username"\n\nfoo\n--xxx\nContent-Disposition: form-data; name="password"\n\nbar\n--xxx--'
-
-$ echo $DATA
---xxx
-Content-Disposition: form-data; name="username"
-
-foo
---xxx
-Content-Disposition: form-data; name="password"
-
-bar
---xxx--
-
-$ curl -XPOST -H "Content-Type: multipart/form-data; boundary=xxx" -d "$DATA" http://localhost:1234/login
+$ curl -XPOST -F "username=foo" -F "password=bar" http://localhost:1234/login
 username: foo, password: bar
 ```
