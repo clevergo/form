@@ -118,8 +118,8 @@ func TestXML(t *testing.T) {
 }
 
 var formData = map[string][]string{
-	"username": []string{"foo"},
-	"password": []string{"bar"},
+	"username": {"foo"},
+	"password": {"bar"},
 }
 
 func TestForm(t *testing.T) {
