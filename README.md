@@ -1,0 +1,3 @@
+# Form Decoder [![Build Status](https://travis-ci.org/clevergo/form.svg?branch=master)](https://travis-ci.org/clevergo/form) [![Coverage Status](https://coveralls.io/repos/github/clevergo/form/badge.svg?branch=master)](https://coveralls.io/github/clevergo/form?branch=master) [![Go Report Card](https://goreportcard.com/badge/github.com/clevergo/form)](https://goreportcard.com/report/github.com/clevergo/form) [![GoDoc](https://godoc.org/github.com/clevergo/form?status.svg)](http://godoc.org/github.com/clevergo/form)
+
+A form deocder that decode request body into a scturct, you don't need to care about what type the request data is.
