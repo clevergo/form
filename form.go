@@ -25,44 +25,54 @@ const (
 	ContentTypeXML           = "application/xml"
 )
 
-var decoders = make(map[string]Decoder)
+var defaultDecoders = &Decoders{}
 
 var defaultDecoder = schema.NewDecoder()
 var defaultMaxMemory int64 = 10 * 1024 * 1024
 
 func init() {
-}
-
-func init() {
 	defaultDecoder.IgnoreUnknownKeys(true)
 	defaultDecoder.SetAliasTag("json")
 
-	Register(ContentTypeForm, NewForm(defaultDecoder))
-	Register(ContentTypeMultipartForm, NewMultipartForm(defaultMaxMemory))
-	Register(ContentTypeJSON, JSON)
-	Register(ContentTypeXML, XML)
+	defaultDecoders.Register(ContentTypeForm, NewForm(defaultDecoder))
+	defaultDecoders.Register(ContentTypeMultipartForm, NewMultipartForm(defaultMaxMemory))
+	defaultDecoders.Register(ContentTypeJSON, JSON)
+	defaultDecoders.Register(ContentTypeXML, XML)
 }
 
 // Register a decoder for the given content type.
 func Register(contentType string, decoder Decoder) {
-	decoders[contentType] = decoder
+	defaultDecoders.Register(contentType, decoder)
 }
-
-// Decoder is a function that decode data from request into v.
-type Decoder func(req *http.Request, v interface{}) error
 
 // Decode data from a request into v, v should be a pointer.
 func Decode(r *http.Request, v interface{}) error {
+	return defaultDecoders.Decode(r, v)
+}
+
+// Decoders is a map that mapping from content type to decoder.
+type Decoders map[string]Decoder
+
+// Register a decoder for the given content type.
+func (d *Decoders) Register(contentType string, decoder Decoder) {
+	(*d)[contentType] = decoder
+}
+
+// Decode data from a request into v, v should be a pointer.
+func (d *Decoders) Decode(r *http.Request, v interface{}) error {
 	contentType, err := parseContentType(r)
 	if err != nil {
 		return err
 	}
-	if decoder, ok := decoders[contentType]; ok {
+	if decoder, ok := (*d)[contentType]; ok {
 		return decoder(r, v)
 	}
 
 	return errors.New("Unsupported content type: " + contentType)
 }
+
+// Decoder is a function that decode data from request into v.
+type Decoder func(req *http.Request, v interface{}) error
 
 func parseContentType(r *http.Request) (string, error) {
 	header := r.Header.Get(ContentType)

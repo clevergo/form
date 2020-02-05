@@ -28,7 +28,7 @@ func TestRegister(t *testing.T) {
 	}
 	contentType := "content/type"
 	Register(contentType, decoder)
-	actual, ok := decoders[contentType]
+	actual, ok := (*defaultDecoders)[contentType]
 	if !ok {
 		t.Error("Failed to register decoder")
 	}
@@ -200,7 +200,7 @@ func TestParseContentType(t *testing.T) {
 }
 
 func TestDecode(t *testing.T) {
-	delete(decoders, "application/json")
+	delete((*defaultDecoders), "application/json")
 	req := httptest.NewRequest(http.MethodPost, "/login", nil)
 	req.Header.Set("Content-Type", "application/json")
 	v := login{}
