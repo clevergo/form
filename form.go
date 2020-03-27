@@ -25,19 +25,27 @@ const (
 	ContentTypeXML           = "application/xml"
 )
 
-var defaultDecoders = &Decoders{}
-
-var defaultDecoder = schema.NewDecoder()
-var defaultMaxMemory int64 = 10 * 1024 * 1024
+var (
+	defaultDecoders  *Decoders
+	defaultDecoder         = schema.NewDecoder()
+	defaultMaxMemory int64 = 10 * 1024 * 1024
+)
 
 func init() {
 	defaultDecoder.IgnoreUnknownKeys(true)
 	defaultDecoder.SetAliasTag("json")
 
-	defaultDecoders.Register(ContentTypeForm, NewForm(defaultDecoder))
-	defaultDecoders.Register(ContentTypeMultipartForm, NewMultipartForm(defaultMaxMemory))
-	defaultDecoders.Register(ContentTypeJSON, JSON)
-	defaultDecoders.Register(ContentTypeXML, XML)
+	defaultDecoders = New()
+}
+
+// New returns a decoders.
+func New() *Decoders {
+	d := &Decoders{}
+	d.Register(ContentTypeForm, NewForm(defaultDecoder))
+	d.Register(ContentTypeMultipartForm, NewMultipartForm(defaultMaxMemory))
+	d.Register(ContentTypeJSON, JSON)
+	d.Register(ContentTypeXML, XML)
+	return d
 }
 
 // Register a decoder for the given content type.
