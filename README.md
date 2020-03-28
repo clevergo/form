@@ -11,7 +11,7 @@ By default, form decoder can handles the following content types:
 
 > Form and multipart form are built on top of gorilla [schema](https://github.com/gorilla/schema), tag name is `json`.
 
-[Register](https://pkg.go.dev/github.com/clevergo/form#Register) allow to register particular decoder or replace default decoder 
+[Register](https://pkg.go.dev/github.com/clevergo/form?tab=doc#Decoders.Register) allow to register particular decoder or replace default decoder 
 for the specified content type.
 
 ## Installation
