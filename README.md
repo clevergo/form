@@ -2,8 +2,6 @@
 
 A form deocder that decode request body of any types(xml, json, form, multipart form...) into a scturct by same codebase.
 
-## Usage
-
 By default, form decoder can handles the following content types:
 
 - Form(application/x-www-form-urlencoded)
@@ -11,52 +9,44 @@ By default, form decoder can handles the following content types:
 - JSON(application/json)
 - XML(application/xml)
 
+> Form and multipart form are built on top of gorilla [schema](github.com/gorilla/schema), tag name is `json`.
+
 [Register](https://pkg.go.dev/github.com/clevergo/form#Register) allow to register particular decoder or replace default decoder 
 for the specified content type.
 
-```go
-package main
+## Installation
 
+```go
+$ go get github.com/clevergo/form
+```
+
+## Usage
+
+```go
 import (
-	"fmt"
 	"net/http"
 
-	"github.com/clevergo/clevergo"
 	"github.com/clevergo/form"
-)
 
-type User struct {
-	Username string `json:"username" xml:"username"`
-	Password string `json:"password" xml:"password"`
+var decoders = form.New()
+
+func init() {
+	// replaces multipart form decoder.
+	decoders.Register(form.ContentTypeMultipartForm, form.NewMultipartForm(10*1024*1024))
+	// registers other decoder
+	// decoders.Register(contentType, decoder)
 }
 
-func login(w http.ResponseWriter, r *http.Request) {
-	user := User{}
-	err := form.Decode(r, &user)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusForbidden)
+func(w http.ResponseWriter, r *http.Request) {
+	err := form
+	if err := decoders.Decode(ctx.Request, &u); err != nil {
+		http.Error(w, http.StatusInternalServerError, err.Error())
 		return
 	}
-	fmt.Fprintf(w, "username: %s, password: %s", user.Username, user.Password)
-}
-
-func main() {
-	app := clevergo.New("localhost:1234")
-	app.Post("/login", login)
-	app.ListenAndServe()
+	// ...
 }
 ```
 
-```shell
-$ curl -XPOST -d "username=foo&password=bar"  http://localhost:1234/login
-username: foo, password: bar
+### Example
 
-$ curl -XPOST -H "Content-Type: application/json" -d '{"username":"foo", "password": "bar"}' http://localhost:1234/login
-username: foo, password: bar
-
-$ curl -XPOST -H "Content-Type: application/xml" -d '<xml><username>foo</username><password>bar</password></xml>' http://localhost:1234/login
-username: foo, password: bar
-
-$ curl -XPOST -F "username=foo" -F "password=bar" http://localhost:1234/login
-username: foo, password: bar
-```
+See [Example](example).
