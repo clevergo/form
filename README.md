@@ -27,6 +27,7 @@ import (
 	"net/http"
 
 	"github.com/clevergo/form"
+)
 
 var decoders = form.New()
 
@@ -43,8 +44,8 @@ func init() {
 }
 
 func(w http.ResponseWriter, r *http.Request) {
-	u := User{}
-	if err := decoders.Decode(ctx.Request, &u); err != nil {
+	u := user{}
+	if err := decoders.Decode(r, &u); err != nil {
 		http.Error(w, http.StatusInternalServerError, err.Error())
 		return
 	}
