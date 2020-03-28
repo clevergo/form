@@ -30,6 +30,11 @@ import (
 
 var decoders = form.New()
 
+type user struct {
+	Username string `json:"username" xml:"username"`
+	Password string `json:"password" xml:"password"`
+}
+
 func init() {
 	// replaces multipart form decoder.
 	decoders.Register(form.ContentTypeMultipartForm, form.NewMultipartForm(10*1024*1024))
@@ -38,6 +43,7 @@ func init() {
 }
 
 func(w http.ResponseWriter, r *http.Request) {
+	u := User{}
 	if err := decoders.Decode(ctx.Request, &u); err != nil {
 		http.Error(w, http.StatusInternalServerError, err.Error())
 		return
