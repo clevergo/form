@@ -194,7 +194,7 @@ func TestParseContentType(t *testing.T) {
 		}
 
 		if contentType != test.expectedContentType {
-			t.Errorf("expected content type %q, ot %q", test.expectedContentType, contentType)
+			t.Errorf("expected content type %q, got %q", test.expectedContentType, contentType)
 		}
 	}
 }
