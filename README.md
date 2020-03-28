@@ -38,7 +38,6 @@ func init() {
 }
 
 func(w http.ResponseWriter, r *http.Request) {
-	err := form
 	if err := decoders.Decode(ctx.Request, &u); err != nil {
 		http.Error(w, http.StatusInternalServerError, err.Error())
 		return
