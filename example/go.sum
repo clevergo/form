@@ -1,0 +1,6 @@
+github.com/clevergo/clevergo v1.6.1 h1:MAJ0hmfGtqV1xQRLc4iZGqLVm4sQR1Zom1Trd0XrMYE=
+github.com/clevergo/clevergo v1.6.1/go.mod h1:/BB51A8ohBG/GCHbN7mUPK6vJNm6XXC+4V/yS0c7RsA=
+github.com/clevergo/form v1.2.0 h1:pUismtBkh9Dqrysrw+My1UdCM4EgrJNnUv5Frg4wKuc=
+github.com/clevergo/form v1.2.0/go.mod h1:MhUWmAL5f5nNe8HHsqtPnFj1pjvBB53rc7aPGwcWPHc=
+github.com/gorilla/schema v1.1.0 h1:CamqUDOFUBqzrvxuz2vEwo8+SUdwsluFh7IlzJh30LY=
+github.com/gorilla/schema v1.1.0/go.mod h1:kgLaKoK1FELgZqMAVxx/5cbj0kT+57qxUrAlIO2eleU=
