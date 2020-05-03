@@ -16,6 +16,11 @@ import (
 	"github.com/gorilla/schema"
 )
 
+// Validatable indicates whether a value can be validated.
+type Validatable interface {
+	Validate() error
+}
+
 // Content type constants.
 const (
 	ContentType              = "Content-Type"
@@ -72,11 +77,18 @@ func (d *Decoders) Decode(r *http.Request, v interface{}) error {
 	if err != nil {
 		return err
 	}
-	if decoder, ok := (*d)[contentType]; ok {
-		return decoder(r, v)
+	decoder, ok := (*d)[contentType]
+	if !ok {
+		return errors.New("Unsupported content type: " + contentType)
+	}
+	if err = decoder(r, v); err != nil {
+		return err
+	}
+	if vv, ok := v.(Validatable); ok {
+		err = vv.Validate()
 	}
 
-	return errors.New("Unsupported content type: " + contentType)
+	return err
 }
 
 // Decoder is a function that decode data from request into v.

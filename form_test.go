@@ -10,14 +10,21 @@ import (
 	"encoding/xml"
 	"net/http"
 	"net/http/httptest"
-	"reflect"
 	"strings"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 type login struct {
-	Username string `schema:"username" json:"username" xml:"username"`
-	Password string `schema:"password" json:"password" xml:"password"`
+	validated bool
+	Username  string `schema:"username" json:"username" xml:"username"`
+	Password  string `schema:"password" json:"password" xml:"password"`
+}
+
+func (l *login) Validate() error {
+	l.validated = true
+	return nil
 }
 
 func TestRegister(t *testing.T) {
@@ -29,14 +36,10 @@ func TestRegister(t *testing.T) {
 	contentType := "content/type"
 	Register(contentType, decoder)
 	actual, ok := (*defaultDecoders)[contentType]
-	if !ok {
-		t.Error("Failed to register decoder")
-	}
-
+	assert.True(t, ok)
 	err := actual(httptest.NewRequest(http.MethodGet, "/", nil), nil)
-	if err != nil || !invoked {
-		t.Error("Failed to register decoder")
-	}
+	assert.Nil(t, err)
+	assert.True(t, invoked)
 }
 
 func TestJSON(t *testing.T) {
@@ -57,24 +60,13 @@ func TestJSON(t *testing.T) {
 		r.Header.Set("Content-Type", ContentTypeJSON)
 		err := Decode(r, &actual)
 		if test.shouldErr {
-			if err == nil {
-				t.Fatal("Expected decode error")
-			}
-			return
+			assert.NotNil(t, err)
+			continue
 		}
-
-		if err != nil {
-			t.Fatal(err.Error())
-		}
-
-		expected := login{}
-		if err := json.Unmarshal(test.body, &expected); err != nil {
-			t.Fatal(err.Error())
-		}
-
-		if !test.shouldErr && !reflect.DeepEqual(expected, actual) {
-			t.Error("Failed to decode JSON")
-		}
+		assert.Nil(t, err)
+		expected := login{validated: true}
+		assert.Nil(t, json.Unmarshal(test.body, &expected))
+		assert.Equal(t, expected, actual)
 	}
 }
 
@@ -96,24 +88,13 @@ func TestXML(t *testing.T) {
 		r.Header.Set("Content-Type", ContentTypeXML)
 		err := Decode(r, &actual)
 		if test.shouldErr {
-			if err == nil {
-				t.Fatal("Expected decode error")
-			}
-			return
+			assert.NotNil(t, err)
+			continue
 		}
-
-		if err != nil {
-			t.Fatal(err.Error())
-		}
-
-		expected := login{}
-		if err := xml.Unmarshal(test.body, &expected); err != nil {
-			t.Fatal(err.Error())
-		}
-
-		if !test.shouldErr && !reflect.DeepEqual(expected, actual) {
-			t.Error("Failed to decode XML")
-		}
+		assert.Nil(t, err)
+		expected := login{validated: true}
+		assert.Nil(t, xml.Unmarshal(test.body, &expected))
+		assert.Equal(t, expected, actual)
 	}
 }
 
@@ -123,27 +104,22 @@ var formData = map[string][]string{
 }
 
 func TestForm(t *testing.T) {
-	expected := login{}
+	expected := login{validated: true}
 	if err := defaultDecoder.Decode(&expected, formData); err != nil {
 		t.Fatal(err.Error())
 	}
 
-	actual := login{}
+	actual := login{validated: true}
 	r := httptest.NewRequest(http.MethodPost, "/", strings.NewReader("username=foo&password=bar"))
 	r.Header.Set("Content-Type", ContentTypeForm)
-	if err := Decode(r, &actual); err != nil {
-		t.Fatal(err.Error())
-	}
-	if !reflect.DeepEqual(expected, actual) {
-		t.Error("Failed to decode post form")
-	}
+	assert.Nil(t, Decode(r, &actual))
+	assert.Equal(t, expected, actual)
 }
 
 func TestMultipartForm(t *testing.T) {
 	expected := login{}
-	if err := defaultDecoder.Decode(&expected, formData); err != nil {
-		t.Fatal(err.Error())
-	}
+	err := defaultDecoder.Decode(&expected, formData)
+	assert.Nil(t, err)
 
 	actual := login{}
 	postData :=
@@ -159,12 +135,10 @@ bar
 `
 	r := httptest.NewRequest(http.MethodPost, "/", strings.NewReader(postData))
 	r.Header.Set("Content-Type", ContentTypeMultipartForm+"; boundary=xxx")
-	if err := Decode(r, &actual); err != nil {
-		t.Fatal(err.Error())
-	}
-	if !reflect.DeepEqual(expected, actual) {
-		t.Error("Failed to decode multipart form")
-	}
+	assert.Nil(t, Decode(r, &actual))
+	assert.True(t, actual.validated)
+	assert.Equal(t, expected.Username, actual.Username)
+	assert.Equal(t, expected.Password, actual.Password)
 }
 
 func TestParseContentType(t *testing.T) {
@@ -187,14 +161,9 @@ func TestParseContentType(t *testing.T) {
 		r.Header.Set(ContentType, test.contentType)
 		contentType, err := parseContentType(r)
 		if test.shouldError {
-			if err == nil {
-				t.Error("expected an error, got nil")
-			}
-			continue
-		}
-
-		if contentType != test.expectedContentType {
-			t.Errorf("expected content type %q, got %q", test.expectedContentType, contentType)
+			assert.NotNil(t, err)
+		} else {
+			assert.Equal(t, test.expectedContentType, contentType)
 		}
 	}
 }
@@ -205,9 +174,7 @@ func TestDecode(t *testing.T) {
 	req.Header.Set("Content-Type", "application/json")
 	v := login{}
 	err := Decode(req, &v)
-	if err == nil {
-		t.Error("expected an error, got nil")
-	}
+	assert.NotNil(t, err)
 }
 
 func TestNewMultipartForm(t *testing.T) {
@@ -227,9 +194,7 @@ func TestNewMultipartForm(t *testing.T) {
 		req.Header.Set("Content-Type", test.contentType)
 		err := decoder(req, &v)
 		if test.shouldError {
-			if err == nil {
-				t.Error("expected an error, got nil")
-			}
+			assert.NotNil(t, err)
 		}
 	}
 }
