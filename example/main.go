@@ -12,8 +12,8 @@ import (
 var decoders = form.New()
 
 type user struct {
-	Username string `json:"username" xml:"username"`
-	Password string `json:"password" xml:"password"`
+	Username string `schema:"username" json:"username" xml:"username"`
+	Password string `schema:"password" json:"password" xml:"password"`
 }
 
 func login(ctx *clevergo.Context) error {
