@@ -38,7 +38,6 @@ var (
 
 func init() {
 	defaultDecoder.IgnoreUnknownKeys(true)
-	defaultDecoder.SetAliasTag("json")
 
 	defaultDecoders = New()
 }
