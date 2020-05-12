@@ -6,9 +6,11 @@
 package form
 
 import (
+	"bytes"
 	"encoding/json"
 	"encoding/xml"
 	"errors"
+	"io"
 	"io/ioutil"
 	"mime"
 	"net/http"
@@ -105,21 +107,18 @@ func parseContentType(r *http.Request) (string, error) {
 
 // JSON is a JSON decoder.
 func JSON(r *http.Request, v interface{}) error {
-	body, err := ioutil.ReadAll(r.Body)
-	if err != nil {
-		return err
-	}
-	return json.Unmarshal(body, v)
+	var buf bytes.Buffer
+	reader := io.TeeReader(r.Body, &buf)
+	r.Body = ioutil.NopCloser(&buf)
+	return json.NewDecoder(reader).Decode(v)
 }
 
 // XML is an XML decoder.
 func XML(r *http.Request, v interface{}) error {
-	body, err := ioutil.ReadAll(r.Body)
-	if err != nil {
-		return err
-	}
-
-	return xml.Unmarshal(body, v)
+	var buf bytes.Buffer
+	reader := io.TeeReader(r.Body, &buf)
+	r.Body = ioutil.NopCloser(&buf)
+	return xml.NewDecoder(reader).Decode(v)
 }
 
 // NewForm returns a post form decoder with the given schema decoder.
