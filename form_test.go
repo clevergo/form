@@ -58,15 +58,17 @@ func TestJSON(t *testing.T) {
 		actual := login{}
 		r := httptest.NewRequest(http.MethodPost, "/", bytes.NewReader(test.body))
 		r.Header.Set("Content-Type", ContentTypeJSON)
-		err := Decode(r, &actual)
-		if test.shouldErr {
-			assert.NotNil(t, err)
-			continue
+		for i := 0; i < 3; i++ {
+			err := Decode(r, &actual)
+			if test.shouldErr {
+				assert.NotNil(t, err)
+				continue
+			}
+			assert.Nil(t, err)
+			expected := login{validated: true}
+			assert.Nil(t, json.Unmarshal(test.body, &expected))
+			assert.Equal(t, expected, actual)
 		}
-		assert.Nil(t, err)
-		expected := login{validated: true}
-		assert.Nil(t, json.Unmarshal(test.body, &expected))
-		assert.Equal(t, expected, actual)
 	}
 }
 
@@ -86,15 +88,17 @@ func TestXML(t *testing.T) {
 		actual := login{}
 		r := httptest.NewRequest(http.MethodPost, "/", bytes.NewReader(test.body))
 		r.Header.Set("Content-Type", ContentTypeXML)
-		err := Decode(r, &actual)
-		if test.shouldErr {
-			assert.NotNil(t, err)
-			continue
+		for i := 0; i < 3; i++ {
+			err := Decode(r, &actual)
+			if test.shouldErr {
+				assert.NotNil(t, err)
+				continue
+			}
+			assert.Nil(t, err)
+			expected := login{validated: true}
+			assert.Nil(t, xml.Unmarshal(test.body, &expected))
+			assert.Equal(t, expected, actual)
 		}
-		assert.Nil(t, err)
-		expected := login{validated: true}
-		assert.Nil(t, xml.Unmarshal(test.body, &expected))
-		assert.Equal(t, expected, actual)
 	}
 }
 
