@@ -1,4 +1,4 @@
-module github.com/clevergo/form
+module clevergo.tech/form
 
 go 1.13
 

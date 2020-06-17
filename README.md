@@ -1,10 +1,9 @@
 # Form Decoder 
 [![Build Status](https://travis-ci.org/clevergo/form.svg?branch=master)](https://travis-ci.org/clevergo/form)
 [![Coverage Status](https://coveralls.io/repos/github/clevergo/form/badge.svg?branch=master)](https://coveralls.io/github/clevergo/form?branch=master)
-[![Go Report Card](https://goreportcard.com/badge/github.com/clevergo/form)](https://goreportcard.com/report/github.com/clevergo/form)
+[![Go.Dev reference](https://img.shields.io/badge/go.dev-reference-blue?logo=go&logoColor=white)](https://pkg.go.dev/clevergo.tech/form?tab=doc)
 [![GoDoc](https://img.shields.io/badge/godoc-reference-blue)](https://pkg.go.dev/github.com/clevergo/form)
 [![Release](https://img.shields.io/github/release/clevergo/form.svg?style=flat-square)](https://github.com/clevergo/form/releases)
-[![Sourcegraph](https://sourcegraph.com/github.com/clevergo/form/-/badge.svg)](https://sourcegraph.com/github.com/clevergo/form?badge)
 
 A form decoder that decode request body of any types(xml, json, form, multipart form...) into a sctruct by same codebase.
 
@@ -17,13 +16,13 @@ By default, form decoder can handles the following content types:
 
 > Form and multipart form are built on top of gorilla [schema](https://github.com/gorilla/schema), tag name is `schema`.
 
-[Register](https://pkg.go.dev/github.com/clevergo/form?tab=doc#Decoders.Register) allow to register particular decoder or replace default decoder 
+[Register](https://pkg.go.dev/clevergo.tech/form?tab=doc#Decoders.Register) allow to register particular decoder or replace default decoder 
 for the specified content type.
 
 ## Installation
 
 ```go
-$ go get github.com/clevergo/form
+$ go get clevergo.tech/form
 ```
 
 ## Usage
@@ -32,7 +31,7 @@ $ go get github.com/clevergo/form
 import (
 	"net/http"
 
-	"github.com/clevergo/form"
+	"clevergo.tech/form"
 )
 
 var decoders = form.New()
