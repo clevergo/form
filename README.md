@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/clevergo/form.svg?branch=master)](https://travis-ci.org/clevergo/form)
 [![Coverage Status](https://coveralls.io/repos/github/clevergo/form/badge.svg?branch=master)](https://coveralls.io/github/clevergo/form?branch=master)
 [![Go.Dev reference](https://img.shields.io/badge/go.dev-reference-blue?logo=go&logoColor=white)](https://pkg.go.dev/clevergo.tech/form?tab=doc)
-[![GoDoc](https://img.shields.io/badge/godoc-reference-blue)](https://pkg.go.dev/github.com/clevergo/form)
+[![Go Report Card](https://goreportcard.com/badge/github.com/clevergo/form)](https://goreportcard.com/report/github.com/clevergo/form)
 [![Release](https://img.shields.io/github/release/clevergo/form.svg?style=flat-square)](https://github.com/clevergo/form/releases)
 
 A form decoder that decode request body of any types(xml, json, form, multipart form...) into a sctruct by same codebase.
@@ -60,4 +60,4 @@ func(w http.ResponseWriter, r *http.Request) {
 
 ### Example
 
-See [Example](example).
+Checkout [example](https://github.com/clevergo/examples/tree/master/form) for details.
