@@ -1,9 +1,9 @@
 # Form Decoder 
-[![Build Status](https://travis-ci.org/clevergo/form.svg?branch=master)](https://travis-ci.org/clevergo/form)
-[![Coverage Status](https://coveralls.io/repos/github/clevergo/form/badge.svg?branch=master)](https://coveralls.io/github/clevergo/form?branch=master)
-[![Go.Dev reference](https://img.shields.io/badge/go.dev-reference-blue?logo=go&logoColor=white)](https://pkg.go.dev/clevergo.tech/form?tab=doc)
-[![Go Report Card](https://goreportcard.com/badge/github.com/clevergo/form)](https://goreportcard.com/report/github.com/clevergo/form)
-[![Release](https://img.shields.io/github/release/clevergo/form.svg?style=flat-square)](https://github.com/clevergo/form/releases)
+[![Build Status](https://img.shields.io/travis/clevergo/form?style=for-the-badge)](https://travis-ci.org/clevergo/form)
+[![Coverage Status](https://img.shields.io/coveralls/github/clevergo/form?style=for-the-badge)](https://coveralls.io/github/clevergo/form?branch=master)
+[![Go.Dev reference](https://img.shields.io/badge/go.dev-reference-blue?logo=go&logoColor=white&style=for-the-badge)](https://pkg.go.dev/clevergo.tech/form?tab=doc)
+[![Go Report Card](https://goreportcard.com/badge/github.com/clevergo/form?style=for-the-badge)](https://goreportcard.com/report/github.com/clevergo/form)
+[![Release](https://img.shields.io/github/release/clevergo/form.svg?style=for-the-badge)](https://github.com/clevergo/form/releases)
 
 A form decoder that decode request body of any types(xml, json, form, multipart form...) into a sctruct by same codebase.
 
