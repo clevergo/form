@@ -4,6 +4,7 @@
 [![Go.Dev reference](https://img.shields.io/badge/go.dev-reference-blue?logo=go&logoColor=white&style=for-the-badge)](https://pkg.go.dev/clevergo.tech/form?tab=doc)
 [![Go Report Card](https://goreportcard.com/badge/github.com/clevergo/form?style=for-the-badge)](https://goreportcard.com/report/github.com/clevergo/form)
 [![Release](https://img.shields.io/github/release/clevergo/form.svg?style=for-the-badge)](https://github.com/clevergo/form/releases)
+[![Downloads](https://img.shields.io/endpoint?url=https://pkg.clevergo.tech/api/badges/downloads/month/clevergo.tech/form&style=for-the-badge)](https://pkg.clevergo.tech/)
 
 A form decoder that decode request body of any types(xml, json, form, multipart form...) into a sctruct by same codebase.
 
