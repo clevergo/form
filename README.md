@@ -1,10 +1,12 @@
 # Form Decoder 
-[![Build Status](https://img.shields.io/travis/clevergo/form?style=for-the-badge)](https://travis-ci.org/clevergo/form)
-[![Coverage Status](https://img.shields.io/coveralls/github/clevergo/form?style=for-the-badge)](https://coveralls.io/github/clevergo/form?branch=master)
-[![Go.Dev reference](https://img.shields.io/badge/go.dev-reference-blue?logo=go&logoColor=white&style=for-the-badge)](https://pkg.go.dev/clevergo.tech/form?tab=doc)
-[![Go Report Card](https://goreportcard.com/badge/github.com/clevergo/form?style=for-the-badge)](https://goreportcard.com/report/github.com/clevergo/form)
-[![Release](https://img.shields.io/github/release/clevergo/form.svg?style=for-the-badge)](https://github.com/clevergo/form/releases)
-[![Downloads](https://img.shields.io/endpoint?url=https://pkg.clevergo.tech/api/badges/downloads/month/clevergo.tech/form&style=for-the-badge)](https://pkg.clevergo.tech/)
+[![Build Status](https://img.shields.io/travis/clevergo/form?style=flat-square)](https://travis-ci.org/clevergo/form)
+[![Coverage Status](https://img.shields.io/coveralls/github/clevergo/form?style=flat-square)](https://coveralls.io/github/clevergo/form?branch=master)
+[![Go.Dev reference](https://img.shields.io/badge/go.dev-reference-blue?logo=go&logoColor=white&style=flat-square)](https://pkg.go.dev/clevergo.tech/form?tab=doc)
+[![Go Report Card](https://goreportcard.com/badge/github.com/clevergo/form?style=flat-square)](https://goreportcard.com/report/github.com/clevergo/form)
+[![Release](https://img.shields.io/github/release/clevergo/form.svg?style=flat-square)](https://github.com/clevergo/form/releases)
+[![Downloads](https://img.shields.io/endpoint?url=https://pkg.clevergo.tech/api/badges/downloads/total/clevergo.tech/form&style=flat-square)](https://pkg.clevergo.tech/)
+[![Chat](https://img.shields.io/badge/chat-telegram-blue?style=flat-square)](https://t.me/clevergotech)
+[![Community](https://img.shields.io/badge/community-forum-blue?style=flat-square&color=orange)](https://forum.clevergo.tech)
 
 A form decoder that decode request body of any types(xml, json, form, multipart form...) into a sctruct by same codebase.
 
